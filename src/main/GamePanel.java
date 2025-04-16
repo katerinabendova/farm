@@ -13,21 +13,18 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleSize = 64;
     final int maxScreenCol = 16;
     final int maxScreenRow = 12;
-    final int screenWidht = 1024;
-    final int screenHeight = 768;
+    final int screenWidht = titleSize * maxScreenCol;
+    final int screenHeight = titleSize * maxScreenRow;
+
     int FPS = 60;
+
     KeyHandler keyHandler = new KeyHandler();
     Thread gameTreader;
     Player player;
-    int playerX;
-    int playerY;
-    int playerSpeed;
 
     public GamePanel() {
         this.player = new Player(this, this.keyHandler);
-        this.playerX = 100;
-        this.playerY = 100;
-        this.playerSpeed = 4;
+
         this.setPreferredSize(new Dimension(1024, 768));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
