@@ -18,7 +18,6 @@ public class Player extends Entity {
         this.kh = kh;
         setDefaultValues();
         getPlayerImage();
-
     }
 
     public void setDefaultValues() {
@@ -44,7 +43,9 @@ public class Player extends Entity {
     }
 
     public void update() {
+
         if (kh.upPressed == true || kh.downPressed == true || kh.leftPressed == true || kh.rightPressed == true){
+
             if (this.kh.upPressed) {
                 direction = "up";
                 this.y -= this.speed;
@@ -58,7 +59,9 @@ public class Player extends Entity {
                 direction = "right";
                 this.x += this.speed;
             }
+
             spriteCounter ++;
+
             if (spriteCounter > 12){
                 if (spriteNum == 1){
                     spriteNum = 2;
@@ -67,22 +70,12 @@ public class Player extends Entity {
                 }
                 spriteCounter = 0;
             }
-
         }
-
-
     }
 
     public void draw(Graphics2D g2) {
-      /*  g2.setColor(Color.white);
-        int var10001 = this.x;
-        int var10002 = this.y;
-        Objects.requireNonNull(this.gp);
-        Objects.requireNonNull(this.gp);
-        g2.fillRect(var10001, var10002, 64, 64);
-
-       */
         BufferedImage image = null;
+
         switch (direction){
             case "up":
                 if (spriteNum == 1) {
