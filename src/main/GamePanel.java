@@ -1,6 +1,8 @@
 package main;
 
+import entity.Entity;
 import entity.Player;
+import object.SuperObject;
 import tile.TileManager;
 
 import java.awt.Color;
@@ -11,9 +13,7 @@ import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
     // screen settings
-    final int originalTitleSize = 16;
-    final int scale = 3;
-    public final int titleSize = 64;
+    public final int titleSize = 48;
     public final int maxScreenCol = 16;
     public final int maxScreenRow = 12;
     public final int screenWidht = titleSize * maxScreenCol;
@@ -22,16 +22,23 @@ public class GamePanel extends JPanel implements Runnable {
     //world settings
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int worldWidht = titleSize * maxWorldCol;
-    public final int worldHeight = titleSize * maxWorldRow;
 
     // fps
     int FPS = 60;
 
-    KeyHandler keyHandler = new KeyHandler();
-    Thread gameTreader;
-    public Player player;
+    // system
     TileManager tileM = new TileManager(this);
+    KeyHandler keyHandler = new KeyHandler();
+    Sound sound = new Sound();
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
+    public UI ui = new UI(this);
+    Thread gameTreader;
+
+    // entity and object
+    public Player player;
+    public SuperObject obj[] = new SuperObject[20];
+    public Entity animals[] = new Entity[10];
 
     public GamePanel() {
         this.player = new Player(this, this.keyHandler);
@@ -41,6 +48,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(this.keyHandler);
         this.setFocusable(true);
+    }
+
+    public void setupGame(){
+        aSetter.setObject();
+
+        playMusic(0);
+        aSetter.setAnimal();
     }
 
     public void startGameTreader() {
@@ -68,16 +82,57 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         this.player.update();
+        
+        // animal
+        for (int i = 0; i < animals.length; i++) {
+            if (animals[i] != null){
+                animals[i].update();
+            }
+        }
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
+        // tile
         tileM.draw(g2);
+
+        //object
+        for (int i = 0; i < obj.length; i++){
+            if (obj[i] != null){
+                obj[i].draw(g2, this);
+            }
+        }
+
+        // animal
+        for (int i = 0; i < animals.length; i++){
+            if (animals[i] != null){
+                animals[i].draw(g2);
+            }
+        }
+        // player
         this.player.draw(g2);
 
+        //ui
+        ui.draw(g2);
+
         g2.dispose();
+    }
+
+    public void playMusic(int i){
+        sound.setFile(i);
+        sound.play();
+        sound.loop();
+    }
+
+    public void stopMusic(){
+        sound.stop();
+    }
+
+    public void playSE(int i){ //se = sound effect
+        sound.setFile(i);
+        sound.play();
     }
 }
 

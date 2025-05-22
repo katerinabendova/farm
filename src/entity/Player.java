@@ -2,12 +2,8 @@ package entity;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Objects;
 import main.GamePanel;
 import main.KeyHandler;
-
-import javax.imageio.ImageIO;
 
 public class Player extends Entity {
     GamePanel gp;
@@ -16,36 +12,45 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    public int hasStar = 0;
+
     public Player(GamePanel gp, KeyHandler kh) {
-        this.gp = gp;
+        super(gp);
+
         this.kh = kh;
 
         screenX = gp.screenWidht / 2 - (gp.titleSize / 2);
         screenY = gp.screenHeight / 2 - (gp.titleSize / 2);
+
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 32;
+        solidArea.height = 32;
+
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        this.worldX = gp.titleSize * 15; //players position on the world map
-        this.worldY = gp.titleSize * 24;
-        this.speed = 5;
+        worldX = gp.titleSize * 4; //players position on the world map
+        worldY = gp.titleSize * 4;
+        speed = 5;
         direction = "down";
     }
     public void getPlayerImage(){
-        try {
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/farmer_back1.png")));
-            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/farmer_back2.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/farmer_front1.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/farmer_front2.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/farmer_side3.png")));
-            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/farmer_side4.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/farmer_side1.png")));
-            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/farmer_side2.png")));
 
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+            up1 = setup("/player/farmer_back1");
+            up2 = setup("/player/farmer_back2");
+            down1 = setup("/player/farmer_front1");
+            down2 = setup("/player/farmer_front2");
+            left1 = setup("/player/farmer_side3");
+            left2 = setup("/player/farmer_side4");
+            right1 = setup("/player/farmer_side1");
+            right2 = setup("/player/farmer_side2");
+
     }
 
     public void update() {
@@ -54,18 +59,47 @@ public class Player extends Entity {
 
             if (this.kh.upPressed) {
                 direction = "up";
-                this.worldY -= this.speed;
+
             } else if (this.kh.downPressed) {
                 direction = "down";
-                this.worldY += this.speed;
+
             } else if (this.kh.leftPressed) {
                 direction = "left";
-                this.worldX -= this.speed;
+
             } else if (this.kh.rightPressed) {
                 direction = "right";
-                this.worldX += this.speed;
+
             }
 
+            // check tile collision
+            collisionOn = false;
+            gp.cChecker.checkTile(this);
+
+            //check object collision
+            int objIndex = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndex);
+
+            // check animal collision
+            int animalIndex = gp.cChecker.checkEntity(this, gp.animals);
+            interactAnimal(animalIndex);
+
+            if (collisionOn == false){
+                switch (direction){
+                    case "up":
+                        this.worldY -= speed;
+                        break;
+                    case "down":
+                        this.worldY += speed;
+                        break;
+                    case "left":
+                        this.worldX -= speed;
+                        break;
+                    case "right":
+                        this.worldX += speed;
+                        break;
+
+                }
+            }
             spriteCounter ++;
 
             if (spriteCounter > 12){
@@ -78,6 +112,18 @@ public class Player extends Entity {
             }
         }
     }
+
+    public void pickUpObject(int i){
+        if (i != 999){
+        }
+    }
+
+    public void interactAnimal(int i){
+        if (i != 999){
+            System.out.println("you are hitting an animal");
+        }
+    }
+
 
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
@@ -116,7 +162,7 @@ public class Player extends Entity {
                 }
                 break;
         }
-        g2.drawImage(image, screenX, screenY, gp.titleSize, gp.titleSize, null);
+        g2.drawImage(image, screenX, screenY, null);
     }
 }
 
