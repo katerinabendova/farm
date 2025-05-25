@@ -27,6 +27,9 @@ public class Entity {
 
     public Entity(GamePanel gp) {
         this.gp = gp;
+        solidArea = new Rectangle(0, 0, gp.titleSize, gp.titleSize); // nebo vlastní velikost
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
     }
 
     public void setAction() {
@@ -34,13 +37,11 @@ public class Entity {
 
     public void update() {
         setAction();
+        collisionOn = false;
+
         gp.cChecker.checkTile(this);
         gp.cChecker.checkObject(this, false);
         gp.cChecker.checkPlayer(this);
-
-
-        collisionOn = false;
-        gp.cChecker.checkTile(this);
 
         if (collisionOn == false) {
             switch (direction) {

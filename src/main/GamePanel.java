@@ -28,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // system
     TileManager tileM = new TileManager(this);
-    KeyHandler keyHandler = new KeyHandler();
+    KeyHandler keyHandler = new KeyHandler(this);
     Sound sound = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
@@ -39,6 +39,13 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player;
     public SuperObject obj[] = new SuperObject[20];
     public Entity animals[] = new Entity[10];
+
+    // game state
+    public int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
+
+
 
     public GamePanel() {
         this.player = new Player(this, this.keyHandler);
@@ -55,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         playMusic(0);
         aSetter.setAnimal();
+        gameState = playState;
     }
 
     public void startGameTreader() {
@@ -81,7 +89,22 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        this.player.update();
+//        if (gameState == playState) {
+//            player.update();
+//            for (int i = 0; i < animals.length; i++) {
+//                if (animals[i] != null) {
+//                    animals[i].update();
+//                }
+//            }
+//        }
+
+
+        //this.player.update();
+
+        if (gameState == playState){
+            player.update();
+        }
+
         
         // animal
         for (int i = 0; i < animals.length; i++) {
@@ -89,6 +112,11 @@ public class GamePanel extends JPanel implements Runnable {
                 animals[i].update();
             }
         }
+        if (gameState == pauseState){
+           ui.drawPauseScreen();
+        }
+
+
     }
 
     public void paintComponent(Graphics g) {

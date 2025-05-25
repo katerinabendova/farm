@@ -19,14 +19,6 @@ public class Main {
         gamePanel.setupGame();
 
         gamePanel.startGameTreader();
-/*
-        window.pack();
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
-
- */
-
-
 
     }
 }

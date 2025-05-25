@@ -1,6 +1,5 @@
 package main;
 
-import entity.AnimalChicken;
 import object.Barn;
 import object.Stable;
 
@@ -24,8 +23,6 @@ public class AssetSetter {
     }
 
     public void setAnimal(){
-        gp.animals[0] = new AnimalChicken(gp);
-        gp.animals[0].worldX = gp.titleSize * 21;
-        gp.animals[0].worldY = gp.titleSize * 21;
+
     }
 }

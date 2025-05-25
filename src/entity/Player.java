@@ -12,11 +12,12 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    public int hasStar = 0;
+    //public int hasStar = 0;
 
     public Player(GamePanel gp, KeyHandler kh) {
         super(gp);
 
+        this.gp = gp;
         this.kh = kh;
 
         screenX = gp.screenWidht / 2 - (gp.titleSize / 2);
@@ -35,9 +36,9 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = gp.titleSize * 4; //players position on the world map
-        worldY = gp.titleSize * 4;
-        speed = 5;
+        worldX = gp.titleSize * 6; //players position on the world map
+        worldY = gp.titleSize * 3;
+        speed = 4;
         direction = "down";
     }
     public void getPlayerImage(){
@@ -164,5 +165,6 @@ public class Player extends Entity {
         }
         g2.drawImage(image, screenX, screenY, null);
     }
+
 }
 
