@@ -51,7 +51,7 @@ public class Player extends Entity {
             left2 = setup("/player/farmer_side4");
             right1 = setup("/player/farmer_side1");
             right2 = setup("/player/farmer_side2");
-
+            basic = setup("/player/farmer_basic");
     }
 
     public void update() {

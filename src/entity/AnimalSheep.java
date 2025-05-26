@@ -5,6 +5,8 @@ import main.GamePanel;
 import java.util.Random;
 
 public class AnimalSheep extends Entity{
+    private int hungerCounter = 0;
+    private int hungerLimit = 8000;
 
     public AnimalSheep(GamePanel gp) {
         super(gp);
@@ -12,10 +14,13 @@ public class AnimalSheep extends Entity{
         direction = "down";
         speed = 1;
         // we can set solid area here if we want
+        maxLife = 6;
+        life = maxLife;
 
         getImage();
     }
-    public void getImage(){
+
+    public void getImage() {
 
         up1 = setup("/animals/sheep_back1");
         up2 = setup("/animals/sheep_back2");
@@ -28,23 +33,23 @@ public class AnimalSheep extends Entity{
 
     }
 
-    public void setAction(){
-        actionLockCounter ++;
+    public void setAction() {
+        actionLockCounter++;
 
-        if (actionLockCounter == 120){
+        if (actionLockCounter == 120) {
             Random rd = new Random();
-            int i = rd.nextInt(100)+1;
+            int i = rd.nextInt(100) + 1;
 
-            if (i <= 25){
+            if (i <= 25) {
                 direction = "up";
             }
-            if (i > 25 && i <= 50){
+            if (i > 25 && i <= 50) {
                 direction = "down";
             }
-            if (i > 50 && i <= 75){
+            if (i > 50 && i <= 75) {
                 direction = "left";
             }
-            if (i > 75 && i <= 100){
+            if (i > 75 && i <= 100) {
                 direction = "right";
             }
 

@@ -15,7 +15,7 @@ public class Entity {
     public int speed;
 
     GamePanel gp;
-    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+    public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, basic;
     public String direction;
     public int spriteCounter = 0;
     public int spriteNum = 1;
@@ -24,6 +24,12 @@ public class Entity {
     public int solidAreaDefaultY;
     public boolean collisionOn = false;
     public int actionLockCounter = 0;
+
+    public int maxLife;
+    public int life;
+
+    public int hungerCounter = 0;
+    public int hungerThreshold = 600;
 
     public Entity(GamePanel gp) {
         this.gp = gp;

@@ -5,12 +5,18 @@ import main.GamePanel;
 import java.util.Random;
 
 public class AnimalCow extends Entity{
+
+    private int hungerCounter = 0;
+    private int hungerLimit = 9000;
+
     public AnimalCow(GamePanel gp) {
         super(gp);
 
         direction = "down";
         speed = 1;
         // we can set solid area here if we want
+        maxLife = 6;
+        life = maxLife;
 
         getImage();
     }

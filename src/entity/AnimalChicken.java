@@ -6,12 +6,19 @@ import java.util.Random;
 
 public class AnimalChicken extends Entity {
 
+    private int hungerCounter = 0;
+    private int hungerLimit = 6000;
+
+
     public AnimalChicken(GamePanel gp) {
         super(gp);
 
         direction = "down";
         speed = 1;
         // we can set solid area here if we want
+
+        maxLife = 6;
+        life = maxLife;
 
         getImage();
     }
@@ -28,7 +35,8 @@ public class AnimalChicken extends Entity {
 
     }
 
-    public void setAction(){
+    @Override
+    public void setAction() {
         actionLockCounter ++;
 
         if (actionLockCounter == 120){
@@ -49,7 +57,19 @@ public class AnimalChicken extends Entity {
 
             actionLockCounter = 0;
         }
-
     }
 
+    @Override
+    public void update() {
+        super.update();
+
+        hungerCounter ++;
+        if (hungerCounter >= hungerLimit){
+            life --;
+            hungerCounter = 0;
+            if (life == 0){
+                life = 0;
+            }
+        }
+    }
 }

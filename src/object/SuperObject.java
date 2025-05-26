@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 
 public class SuperObject {
 
-    public BufferedImage image;
+    public BufferedImage image, image2, image3;
     public String name;
     public boolean collision = false;
     public int worldX;
@@ -23,12 +23,16 @@ public class SuperObject {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
+        int width = gp.titleSize*4;
+        int height = gp.titleSize*4
+                ;
+
         if (worldX + gp.titleSize > gp.player.worldX - gp.player.screenX &&
                 worldX + gp.titleSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.titleSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.titleSize < gp.player.worldY + gp.player.screenY) {
 
-            g2.drawImage(image, screenX, screenY, gp.titleSize, gp.titleSize, null);
+            g2.drawImage(image, screenX, screenY, width, height, null);
         }
     }
 }
