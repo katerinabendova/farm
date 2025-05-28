@@ -20,8 +20,8 @@ public class Player extends Entity {
         this.gp = gp;
         this.kh = kh;
 
-        screenX = gp.screenWidht / 2 - (gp.titleSize / 2);
-        screenY = gp.screenHeight / 2 - (gp.titleSize / 2);
+        screenX = gp.screenWidht / 2 - (gp.tileSize / 2);
+        screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
 
         solidArea = new Rectangle();
         solidArea.x = 8;
@@ -36,8 +36,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = gp.titleSize * 6; //players position on the world map
-        worldY = gp.titleSize * 3;
+        worldX = gp.tileSize * 6; //players position on the world map
+        worldY = gp.tileSize * 3;
         speed = 4;
         direction = "down";
     }

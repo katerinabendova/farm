@@ -1,17 +1,18 @@
 package object;
 
+import entity.Entity;
+import main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Sweather extends SuperObject{
-    public Sweather() {
-        name = "Sweather";
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/sweather.png"));
+public class Sweather extends Entity {
 
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+    public Sweather(GamePanel gp) {
+        super(gp);
+        name = "sweather";
+        down1 = setup("/objects/sweather"
+        );
         collision = true;
     }
 }

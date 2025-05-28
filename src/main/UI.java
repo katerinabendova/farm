@@ -2,7 +2,6 @@ package main;
 
 import entity.Entity;
 import object.Life;
-import object.SuperObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -18,10 +17,11 @@ public class UI {
 
     public UI(GamePanel gp) {
         this.gp = gp;
-
         imact_100 = new Font("IMPACT", Font.PLAIN, 100);
+    }
 
-        SuperObject life = new Life(gp);
+    public void loadLifeIcons() {
+        Entity life = new Life(gp);
         lifeFull = life.image;
         lifeHalf = life.image2;
         lifeBlank = life.image3;
@@ -96,7 +96,7 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 85));
         String text = "FARMING SIMULATOR";
         int x = getXForCenteredText(text);
-        int y = gp.titleSize*3;
+        int y = gp.tileSize *3;
 
         g2.setColor(Color.white);
         g2.drawString(text, x+3, y+3);
@@ -104,34 +104,34 @@ public class UI {
         g2.setColor(new Color(169,120,196));
         g2.drawString(text, x, y);
 
-        x = gp.screenWidht/2 - (gp.titleSize*2)/2;
-        y += gp.titleSize*2;
-        g2.drawImage(gp.player.basic, x, y, gp.titleSize*2, gp.titleSize*2, null);
+        x = gp.screenWidht/2 - (gp.tileSize *2)/2;
+        y += gp.tileSize *2;
+        g2.drawImage(gp.player.basic, x, y, gp.tileSize *2, gp.tileSize *2, null);
 
         g2.setFont(g2.getFont().deriveFont(Font.BOLD, 45));
 
         text = "NEW GAME";
         x = getXForCenteredText(text);
-        y += gp.titleSize*3.5;
+        y += gp.tileSize *3.5;
         g2.drawString(text, x, y);
         if (commandNum == 0){
-            g2.drawString(">", x - gp.titleSize, y);
+            g2.drawString(">", x - gp.tileSize, y);
         }
 
         text = "LOAD GAME";
         x = getXForCenteredText(text);
-        y += gp.titleSize;
+        y += gp.tileSize;
         g2.drawString(text, x, y);
         if (commandNum == 1){
-            g2.drawString(">", x - gp.titleSize, y);
+            g2.drawString(">", x - gp.tileSize, y);
         }
 
         text = "QUIT";
         x = getXForCenteredText(text);
-        y += gp.titleSize;
+        y += gp.tileSize;
         g2.drawString(text, x, y);
         if (commandNum == 2){
-            g2.drawString(">", x - gp.titleSize, y);
+            g2.drawString(">", x - gp.tileSize, y);
         }
     }
     public void drawPauseScreen(){

@@ -1,18 +1,18 @@
 package object;
 
+import entity.Entity;
+import main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Nettle extends SuperObject{
+public class Nettle extends Entity {
 
-    public Nettle() {
-        name = "Nettle";
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/nettle.png"));
 
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+    public Nettle(GamePanel gp) {
+        super(gp);
+        name = "nettle";
+        down1 = setup("/objects/nettle");
         collision = true;
     }
 }

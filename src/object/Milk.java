@@ -1,18 +1,17 @@
 package object;
 
+import entity.Entity;
+import main.GamePanel;
+
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Milk extends SuperObject{
+public class Milk extends Entity {
 
-    public Milk() {
-        name = "Milk";
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/milk.png"));
-
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+    public Milk(GamePanel gp) {
+        super(gp);
+        name = "milk";
+        down1 = setup("/objects/milk");
         collision = true;
     }
 }

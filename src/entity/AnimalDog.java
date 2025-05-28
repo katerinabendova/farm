@@ -14,6 +14,8 @@ public class AnimalDog extends Entity{
 
         direction = "down";
         speed = 1;
+        entityWidth = gp.tileSize;
+        entityHeight = gp.tileSize;
         // we can set solid area here if we want
         maxLife = 6;
         life = maxLife;

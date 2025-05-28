@@ -16,6 +16,7 @@ public class Entity {
 
     GamePanel gp;
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2, basic;
+    public BufferedImage image,image2, image3;
     public String direction;
     public int spriteCounter = 0;
     public int spriteNum = 1;
@@ -23,6 +24,10 @@ public class Entity {
     public int solidAreaDefaultX;
     public int solidAreaDefaultY;
     public boolean collisionOn = false;
+    public String name;
+    public int entityWidth;
+    public int entityHeight;
+    public boolean collision = false;
     public int actionLockCounter = 0;
 
     public int maxLife;
@@ -33,9 +38,10 @@ public class Entity {
 
     public Entity(GamePanel gp) {
         this.gp = gp;
-        solidArea = new Rectangle(0, 0, gp.titleSize, gp.titleSize); // nebo vlastní velikost
+        solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // nebo vlastní velikost
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
+        this.direction = "down";
     }
 
     public void setAction() {
@@ -85,10 +91,10 @@ public class Entity {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if (worldX + gp.titleSize > gp.player.worldX - gp.player.screenX &&
-                worldX + gp.titleSize < gp.player.worldX + gp.player.screenX &&
-                worldY + gp.titleSize > gp.player.worldY - gp.player.screenY &&
-                worldY - gp.titleSize < gp.player.worldY + gp.player.screenY) {
+        if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
+                worldX + gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
+                worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
             switch (direction){
                 case "up":
                     if (spriteNum == 1) {
@@ -124,7 +130,9 @@ public class Entity {
                     break;
             }
 
-            g2.drawImage(image, screenX, screenY, gp.titleSize, gp.titleSize, null);
+            if (image != null) {
+                g2.drawImage(image, screenX, screenY, entityWidth, entityHeight, null);
+            }
         }
     }
 
@@ -134,10 +142,25 @@ public class Entity {
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + ".png")));
-            image = uTool.scaleImage(image, gp.titleSize, gp.titleSize);
+            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
         } catch (IOException e){
             e.printStackTrace();
         }
         return image;
     }
+
+    public BufferedImage setupBig(String imagePath, int scaleFactor){
+        UtilityTool uTool = new UtilityTool();
+        BufferedImage image = null;
+
+        try {
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream(imagePath + ".png")));
+            image = uTool.scaleImage(image, gp.tileSize * scaleFactor, gp.tileSize * scaleFactor);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return image;
+    }
+
 }

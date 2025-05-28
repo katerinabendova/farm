@@ -1,23 +1,17 @@
 package object;
 
+import entity.Entity;
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Star extends SuperObject {
-
-    GamePanel gp;
+public class Star extends Entity {
 
     public Star(GamePanel gp) {
-        name = "Star";
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/star.png"));
-
-            uTool.scaleImage(image, gp.titleSize, gp.titleSize);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        super(gp);
+        name = "star";
+        down1 = setup("/objects/star");
         collision = true;
     }
 }

@@ -2,22 +2,24 @@ package main;
 
 import entity.Entity;
 import entity.Player;
-import object.SuperObject;
 import tile.TileManager;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
     // screen settings
-    public final int titleSize = 48;
+    public final int tileSize = 48;
     public final int maxScreenCol = 16;
     public final int maxScreenRow = 12;
-    public final int screenWidht = titleSize * maxScreenCol;
-    public final int screenHeight = titleSize * maxScreenRow;
+    public final int screenWidht = tileSize * maxScreenCol;
+    public final int screenHeight = tileSize * maxScreenRow;
 
     //world settings
     public final int maxWorldCol = 50;
@@ -33,12 +35,15 @@ public class GamePanel extends JPanel implements Runnable {
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+
+    public EventHandler eHandler = new EventHandler(this);
     Thread gameTreader;
 
     // entity and object
     public Player player;
-    public SuperObject obj[] = new SuperObject[20];
+    public Entity obj[] = new Entity[20];
     public Entity animals[] = new Entity[10];
+    ArrayList<Entity> entities =new ArrayList<>();
 
     // game state
     public int gameState;
@@ -55,6 +60,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(this.keyHandler);
         this.setFocusable(true);
+        ui.loadLifeIcons();
 
         setupGame();
     }
@@ -104,6 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gameState == playState) {
             player.update();
+            //eHandler.checkEvent();
         }
 
 
@@ -130,27 +137,34 @@ public class GamePanel extends JPanel implements Runnable {
         }
         // others
         else {
-
-            // tile
             tileM.draw(g2);
 
-            //object
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    obj[i].draw(g2, this);
-                }
-            }
-
-            // animal
+            entities.add(player);
             for (int i = 0; i < animals.length; i++) {
                 if (animals[i] != null) {
-                    animals[i].draw(g2);
+                    entities.add(animals[i]);
                 }
             }
-            // player
-            this.player.draw(g2);
+            for (int i = 0; i < obj.length; i++) {
+                if (obj[i] != null) {
+                    entities.add(obj[i]);
+                }
+            }
 
-            //ui
+            Collections.sort(entities, new Comparator<Entity>() {
+                @Override
+                public int compare(Entity e1, Entity e2) {
+                    int result = Integer.compare(e1.worldX, e2.worldY);
+                    return result;
+                }
+            });
+
+            for (int i = 0; i < entities.size(); i++) {
+                entities.get(i).draw(g2);
+            }
+            for (int i = 0; i < entities.size(); i++) {
+                entities.remove(i);
+            }
             ui.draw(g2);
         }
 
