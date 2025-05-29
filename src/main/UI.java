@@ -20,7 +20,7 @@ public class UI {
         imact_100 = new Font("IMPACT", Font.PLAIN, 100);
     }
 
-    public void loadLifeIcons() {
+    public void loadLifeImages() {
         Entity life = new Life(gp);
         lifeFull = life.image;
         lifeHalf = life.image2;

@@ -27,10 +27,14 @@ public class CollisionChecker {
         switch (entity.direction){
             case "up":
                 entityTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
-                if (entityTopRow >= 0 && entityLeftCol >= 0 && entityRightCol < gp.maxWorldCol) {
+                if (entityTopRow >= 0 && entityTopRow < gp.maxWorldRow &&
+                        entityLeftCol >= 0 && entityLeftCol < gp.maxWorldCol &&
+                        entityRightCol >= 0 && entityRightCol < gp.maxWorldCol) {
+
                     tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
                     tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
-                    if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true){
+
+                    if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
                         entity.collisionOn = true;
                     }
                 }
@@ -38,10 +42,14 @@ public class CollisionChecker {
 
             case "down":
                 entityBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
-                if (entityBottomRow < gp.maxWorldRow && entityLeftCol >= 0 && entityRightCol < gp.maxWorldCol) {
+                if (entityBottomRow >= 0 && entityBottomRow < gp.maxWorldRow &&
+                        entityLeftCol >= 0 && entityLeftCol < gp.maxWorldCol &&
+                        entityRightCol >= 0 && entityRightCol < gp.maxWorldCol) {
+
                     tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
                     tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
-                    if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true){
+
+                    if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
                         entity.collisionOn = true;
                     }
                 }
@@ -49,10 +57,14 @@ public class CollisionChecker {
 
             case "left":
                 entityLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
-                if (entityLeftCol >= 0 && entityTopRow >= 0 && entityBottomRow < gp.maxWorldRow) {
+                if (entityLeftCol >= 0 && entityLeftCol < gp.maxWorldCol &&
+                        entityTopRow >= 0 && entityTopRow < gp.maxWorldRow &&
+                        entityBottomRow >= 0 && entityBottomRow < gp.maxWorldRow) {
+
                     tileNum1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
                     tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
-                    if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true){
+
+                    if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
                         entity.collisionOn = true;
                     }
                 }
@@ -60,16 +72,21 @@ public class CollisionChecker {
 
             case "right":
                 entityRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
-                if (entityRightCol < gp.maxWorldCol && entityTopRow >= 0 && entityBottomRow < gp.maxWorldRow) {
+                if (entityRightCol >= 0 && entityRightCol < gp.maxWorldCol &&
+                        entityTopRow >= 0 && entityTopRow < gp.maxWorldRow &&
+                        entityBottomRow >= 0 && entityBottomRow < gp.maxWorldRow) {
+
                     tileNum1 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
                     tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
-                    if (gp.tileM.tile[tileNum1].collision == true || gp.tileM.tile[tileNum2].collision == true){
+
+                    if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision){
                         entity.collisionOn = true;
                     }
                 }
                 break;
         }
     }
+
 
 
     public int checkObject(Entity entity, boolean player) {

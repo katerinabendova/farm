@@ -22,8 +22,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = tileSize * maxScreenRow;
 
     //world settings
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    public int maxWorldCol = 50;
+    public int maxWorldRow = 50;
 
     // fps
     int FPS = 60;
@@ -60,14 +60,14 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(this.keyHandler);
         this.setFocusable(true);
-        ui.loadLifeIcons();
+        ui.loadLifeImages();
 
         setupGame();
     }
 
     public void setupGame() {
-        aSetter.setObject();
-        aSetter.setAnimal();
+        aSetter.setObjectWorld1();
+        aSetter.setAnimalWorld1();
         //   playMusic(0);
         gameState = titleState;
     }
@@ -76,6 +76,25 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameTreader = new Thread(this);
         this.gameTreader.start();
     }
+
+    public void loadMapData(String mapName) {
+        tileM.loadMap("/maps/" + mapName);
+
+        maxWorldCol = tileM.maxWorldCol;
+        maxWorldRow = tileM.maxWorldRow;
+
+        obj = new Entity[20];
+        animals = new Entity[10];
+
+        if (mapName.equals("stable.txt")) {
+            aSetter.setObjectStable();
+            aSetter.setAnimalStable();
+        } else if (mapName.equals("world1.txt")) {
+            aSetter.setObjectWorld1();
+            aSetter.setAnimalWorld1();
+        }
+    }
+
 
     public void run() {
         double drawInterval = (double) (1000000000 / this.FPS);
@@ -110,7 +129,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         if (gameState == playState) {
             player.update();
-            //eHandler.checkEvent();
+            eHandler.checkEvent();
         }
 
 
@@ -139,37 +158,35 @@ public class GamePanel extends JPanel implements Runnable {
         else {
             tileM.draw(g2);
 
+            entities = new ArrayList<>();
+
             entities.add(player);
-            for (int i = 0; i < animals.length; i++) {
-                if (animals[i] != null) {
-                    entities.add(animals[i]);
+            for (Entity animal : animals) {
+                if (animal != null) {
+                    entities.add(animal);
                 }
             }
-            for (int i = 0; i < obj.length; i++) {
-                if (obj[i] != null) {
-                    entities.add(obj[i]);
+            for (Entity object : obj) {
+                if (object != null) {
+                    entities.add(object);
                 }
             }
 
             Collections.sort(entities, new Comparator<Entity>() {
                 @Override
                 public int compare(Entity e1, Entity e2) {
-                    int result = Integer.compare(e1.worldX, e2.worldY);
-                    return result;
+                    return Integer.compare(e1.worldY, e2.worldY);
                 }
             });
 
-            for (int i = 0; i < entities.size(); i++) {
-                entities.get(i).draw(g2);
-            }
-            for (int i = 0; i < entities.size(); i++) {
-                entities.remove(i);
+            for (Entity entity : entities) {
+                entity.draw(g2);
             }
             ui.draw(g2);
-        }
 
 
-        g2.dispose();
+}
+            g2.dispose();
     }
 
     public void playMusic(int i) {
@@ -186,5 +203,6 @@ public class GamePanel extends JPanel implements Runnable {
         sound.setFile(i);
         sound.play();
     }
+
 }
 

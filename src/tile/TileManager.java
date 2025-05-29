@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class TileManager {
+    public int maxWorldCol;
+    public int maxWorldRow;
     GamePanel gp;
     public Tile[] tile;
     public int mapTileNum[][];
@@ -18,13 +20,14 @@ public class TileManager {
     public TileManager(GamePanel gp){
         this.gp = gp;
 
-        tile = new Tile[30];
+        tile = new Tile[40];
         mapTileNum = new int [gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
         loadMap("/maps/world1.txt");
     }
-
+/*
     public void loadMap(String filePath){
+
         try {
             InputStream is = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -54,7 +57,44 @@ public class TileManager {
         } catch (Exception e){
             e.printStackTrace();
         }
+
     }
+    */
+public void loadMap(String filePath) {
+    try {
+        InputStream is = getClass().getResourceAsStream(filePath);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+        java.util.List<int[]> lines = new java.util.ArrayList<>();
+        String line;
+        while ((line = br.readLine()) != null) {
+            String[] tokens = line.split(" ");
+            int[] row = new int[tokens.length];
+            for (int i = 0; i < tokens.length; i++) {
+                row[i] = Integer.parseInt(tokens[i]);
+            }
+            lines.add(row);
+        }
+        br.close();
+
+        int rows = lines.size();
+        int cols = lines.get(0).length;
+        mapTileNum = new int[cols][rows];  // [col][row]
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                mapTileNum[col][row] = lines.get(row)[col];
+            }
+        }
+
+        gp.maxWorldCol = cols;
+        gp.maxWorldRow = rows;
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
 
     /**
      *
@@ -88,6 +128,11 @@ public class TileManager {
             setup(24, "stream_basic2", true);
             setup(25, "stream_bottom_right", true);
             setup(26, "stream_top_left", true);
+            setup(27, "teleport_place", false);
+            setup(28, "stable_circuit", true);
+            setup(29, "stable_floor", false);
+            setup(30, "barn_circuit", true);
+            setup(31, "barn_floor", false);
 
     }
 

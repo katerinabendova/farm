@@ -1,9 +1,6 @@
 package main;
 
-import entity.AnimalChicken;
-import entity.AnimalCow;
-import entity.AnimalDog;
-import entity.AnimalSheep;
+import entity.*;
 import object.Barn;
 import object.Stable;
 
@@ -15,7 +12,9 @@ public class AssetSetter {
         this.gp = gp;
     }
 
-    public void setObject(){
+    public void setObjectWorld1() {
+        gp.obj = new Entity[10];
+
         gp.obj[0] = new Barn(gp);
         gp.obj[0].worldX = 8 * gp.tileSize;
         gp.obj[0].worldY = 6 * gp.tileSize;
@@ -23,10 +22,11 @@ public class AssetSetter {
         gp.obj[1] = new Stable(gp);
         gp.obj[1].worldX = 19 * gp.tileSize;
         gp.obj[1].worldY = 40 * gp.tileSize;
-
     }
 
-    public void setAnimal(){
+    public void setAnimalWorld1() {
+        gp.animals = new Entity[10];
+
         gp.animals[0] = new AnimalChicken(gp);
         gp.animals[0].worldX = gp.tileSize * 21;
         gp.animals[0].worldY = gp.tileSize * 21;
@@ -42,5 +42,13 @@ public class AssetSetter {
         gp.animals[3] = new AnimalSheep(gp);
         gp.animals[3].worldX = gp.tileSize * 25;
         gp.animals[3].worldY = gp.tileSize * 35;
+    }
+
+    public void setAnimalStable() {
+        gp.animals = new Entity[10];
+    }
+
+    public void setObjectStable() {
+        gp.obj = new Entity[10];
     }
 }

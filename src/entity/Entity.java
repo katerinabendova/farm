@@ -33,9 +33,6 @@ public class Entity {
     public int maxLife;
     public int life;
 
-    public int hungerCounter = 0;
-    public int hungerThreshold = 600;
-
     public Entity(GamePanel gp) {
         this.gp = gp;
         solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // nebo vlastní velikost

@@ -1,5 +1,7 @@
 package main;
 
+import entity.Entity;
+
 import java.awt.*;
 
 public class EventHandler {
@@ -10,15 +12,41 @@ public class EventHandler {
     public EventHandler(GamePanel gp) {
         this.gp = gp;
 
-        eventRect = new Rectangle(23, 23, 8, 8);
+        eventRect = new Rectangle(23, 23, 16, 16
+
+        );
         eventRectDefaultX = eventRect.x;
         eventRectDefaultY = eventRect.y;
     }
 
     public void checkEvent() {
-        if (hit(10, 10, "any")) {
-            teleportToMap("/maps/stable.txt", 5 * gp.tileSize, 7 * gp.tileSize, gp.playState);
+        if (hit(10, 11, "any")) {
+            teleportToMap("stable.txt", 5 * gp.tileSize, 7 * gp.tileSize, gp.playState, 20, 12, "down", 5, 4);
         }
+        if (hit(21, 45, "any")) {
+            teleportToMap("barn.txt", 5 * gp.tileSize, 7 * gp.tileSize, gp.playState, 20, 12, "down", 5, 4);
+        }
+
+        if (hit(3, 4, "any")) {
+            teleportToMap("world1.txt", 10 * gp.tileSize, 12 * gp.tileSize, gp.playState, gp.maxWorldCol, gp.maxWorldRow, "down", 2, 2);
+        }
+    }
+
+    public void teleportToMap(String mapFileName, int playerX, int playerY, int gameState, int newMaxCol, int newMaxRow, String playerDirection, int playerStartCol, int playerStartRow) {
+        gp.loadMapData(mapFileName);
+        gp.maxWorldCol = newMaxCol;
+        gp.maxWorldRow = newMaxRow;
+
+        gp.tileM.mapTileNum = new int[newMaxCol][newMaxRow];
+
+        gp.tileM.loadMap("/maps/" + mapFileName);
+
+        gp.player.worldX = playerStartCol * gp.tileSize;
+        gp.player.worldY = playerStartRow * gp.tileSize;
+        gp.player.direction = playerDirection;
+
+        gp.gameState = gameState;
+
     }
 
     public boolean hit(int eventCol, int eventRow, String reqDirection) {
@@ -40,17 +68,6 @@ public class EventHandler {
         }
 
         return hit;
-    }
-
-    public void teleportToMap(String mapFilePath, int newPlayerX, int newPlayerY, int gameState) {
-        gp.tileM.loadMap(mapFilePath);
-
-        gp.player.worldX = newPlayerX;
-        gp.player.worldY = newPlayerY;
-
-        gp.gameState = gameState;
-
-        // gp.requestFocusInWindow();
     }
 
     public void damagePit(int gameState) {
