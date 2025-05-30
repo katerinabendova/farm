@@ -4,12 +4,9 @@ import main.GamePanel;
 
 import java.util.Random;
 
-public class AnimalDog extends Entity{
+public class Dog extends Entity{
 
-    private int hungerCounter = 0;
-    private int hungerLimit = 8000;
-
-    public AnimalDog(GamePanel gp) {
+    public Dog(GamePanel gp) {
         super(gp);
 
         direction = "down";

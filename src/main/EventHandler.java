@@ -12,9 +12,7 @@ public class EventHandler {
     public EventHandler(GamePanel gp) {
         this.gp = gp;
 
-        eventRect = new Rectangle(23, 23, 16, 16
-
-        );
+        eventRect = new Rectangle(23, 23, 16, 16);
         eventRectDefaultX = eventRect.x;
         eventRectDefaultY = eventRect.y;
     }

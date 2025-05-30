@@ -11,14 +11,23 @@ public class Inventory {
         items.put(name, items.getOrDefault(name, 0) + 1);
     }
 
-    public void removeItem(String name) {
-        if (items.containsKey(name)) {
-            int count = items.get(name);
-            if (count > 1) {
-                items.put(name, count - 1);
+    public void removeItem(String itemName, int amount) {
+        if (hasItem(itemName, amount)) {
+            int currentAmount = items.get(itemName);
+            int newAmount = currentAmount - amount;
+            if (newAmount <= 0) {
+                items.remove(itemName);
             } else {
-                items.remove(name);
+                items.put(itemName, newAmount);
             }
         }
     }
+
+    public boolean hasItem(String itemName, int amount) {
+        if (items.containsKey(itemName)) {
+            return items.get(itemName) >= amount;
+        }
+        return false;
+    }
+
 }

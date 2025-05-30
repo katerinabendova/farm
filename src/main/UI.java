@@ -13,6 +13,8 @@ public class UI {
     Font imact_100;
     BufferedImage lifeFull, lifeHalf, lifeBlank;
     public int commandNum = 0;
+    private String warningMessage = "";
+
 
 
     public UI(GamePanel gp) {
@@ -51,12 +53,16 @@ public class UI {
         }
         else if (gp.gameState == gp.playState || gp.gameState == gp.pauseState){
             drawAnimalLife();
+            updateWarningMessage();
             drawInventory();
         }
             if (gp.gameState == gp.pauseState) {
                 drawPauseScreen();
             }
+        if (gp.gameState == gp.gameOverState) {
+            drwGameOverScreen();
         }
+    }
 
 
     public void drawAnimalLife(){
@@ -145,6 +151,18 @@ public class UI {
         g2.setColor(new Color(169,120,196));
         g2.drawString(text, x, y);
     }
+    public void drwGameOverScreen(){
+        g2.setColor(new Color(185,216,149));
+        g2.fillRect(0, 0, gp.screenWidht, gp.screenHeight);
+
+        g2.setFont(new Font("IMPACT", Font.BOLD, 100));
+        g2.setColor(new Color(169,120,196));
+        String text = "GAME OVER";
+
+        int x = getXForCenteredText(text);
+        int y = gp.tileSize *3;
+        g2.drawString(text, x, y);
+    }
 
     public int getXForCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
@@ -171,6 +189,30 @@ public class UI {
                 y += 25;
             }
         }
+        if (!warningMessage.isEmpty()) {
+            y += 20;
+            g2.setColor(Color.RED);
+            g2.drawString(warningMessage, x, y);
+        }
     }
+    public void updateWarningMessage() {
+        boolean animalHungry = false;
+
+        for (int i = 0; i < gp.animals.length; i++) {
+            if (gp.animals[i] != null) {
+                if (gp.animals[i].isHungry()) {
+                    animalHungry = true;
+                    break;
+                }
+            }
+        }
+
+        if (animalHungry) {
+            warningMessage = "WARNING: Some animals are hungry!";
+        } else {
+            warningMessage = "";
+        }
+    }
+
 
 }

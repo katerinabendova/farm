@@ -35,8 +35,7 @@ public class Entity {
 
     public Entity(GamePanel gp) {
         this.gp = gp;
-        solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize); // nebo vlastní velikost
-        solidAreaDefaultX = solidArea.x;
+        solidArea = new Rectangle(0, 0, gp.tileSize, gp.tileSize);
         solidAreaDefaultY = solidArea.y;
         this.direction = "down";
     }
@@ -89,7 +88,7 @@ public class Entity {
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
         if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-                worldX + gp.tileSize < gp.player.worldX + gp.player.screenX &&
+                worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                 worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
                 worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
             switch (direction){
@@ -159,5 +158,10 @@ public class Entity {
 
         return image;
     }
+
+    public boolean isHungry() {
+        return this.life < this.maxLife;
+    }
+
 
 }

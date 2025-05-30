@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int gameOverState = 3;
 
 
     public GamePanel() {
@@ -87,7 +88,7 @@ public class GamePanel extends JPanel implements Runnable {
         maxWorldCol = tileM.maxWorldCol;
         maxWorldRow = tileM.maxWorldRow;
 
-        obj = new Entity[20];
+        obj = new Entity[10];
         animals = new Entity[10];
 
         if (mapName.equals("stable.txt")) {
@@ -176,6 +177,8 @@ public class GamePanel extends JPanel implements Runnable {
                      entities.add(object);
                 }
             }
+
+
 
             Collections.sort(entities, new Comparator<Entity>() {
                 @Override

@@ -4,22 +4,22 @@ import main.GamePanel;
 
 import java.util.Random;
 
-public class AnimalSheep extends Entity{
-    private int hungerCounter = 0;
-    private int hungerLimit = 8000;
-
-    public AnimalSheep(GamePanel gp) {
+public class Sheep extends Animal{
+    public Sheep(GamePanel gp) {
         super(gp);
-
         direction = "down";
+       // spriteNum = 1;
         speed = 1;
-        entityWidth = gp.tileSize;
         entityHeight = gp.tileSize;
-        // we can set solid area here if we want
-        maxLife = 6;
-        life = maxLife;
+        entityWidth = gp.tileSize;
+        this.hungerInterval = 60000;
+        this.grainNeededPerLife = 2;
+        this.maxLife = 6;
+        this.life = maxLife;
+
 
         getImage();
+
     }
 
     public void getImage() {
