@@ -51,11 +51,13 @@ public class UI {
         }
         else if (gp.gameState == gp.playState || gp.gameState == gp.pauseState){
             drawAnimalLife();
+            drawInventory();
+        }
             if (gp.gameState == gp.pauseState) {
                 drawPauseScreen();
             }
         }
-    }
+
 
     public void drawAnimalLife(){
         for (int i = 0; i < gp.animals.length; i++) {
@@ -139,6 +141,8 @@ public class UI {
         int x = getXForCenteredText(text);
         int y = gp.screenHeight/2;
 
+        g2.setFont(imact_100);
+        g2.setColor(new Color(169,120,196));
         g2.drawString(text, x, y);
     }
 
@@ -147,4 +151,26 @@ public class UI {
         int x = gp.screenWidht/2 - length/2;
         return x;
     }
+
+    public void drawInventory() {
+        g2.setColor(Color.white);
+        g2.setFont(new Font("IMPACT", Font.PLAIN, 20));
+
+        int x = 20;
+        int y = 40;
+
+        g2.drawString("INVENTORY:", x, y);
+        y += 30;
+
+        if (gp.inventory.items.isEmpty()) {
+            g2.drawString("- empty -", x, y);
+        } else {
+            for (String itemName : gp.inventory.items.keySet()) {
+                int count = gp.inventory.items.get(itemName);
+                g2.drawString(itemName + ": " + count, x, y);
+                y += 25;
+            }
+        }
+    }
+
 }

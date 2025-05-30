@@ -2,6 +2,7 @@ package main;
 
 import entity.Entity;
 import entity.Player;
+import crop.CropManager;
 import tile.TileManager;
 
 import java.awt.Color;
@@ -29,12 +30,15 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     // system
-    TileManager tileM = new TileManager(this);
-    KeyHandler keyHandler = new KeyHandler(this);
-    Sound sound = new Sound();
+    public TileManager tileM = new TileManager(this);
+    public KeyHandler keyHandler = new KeyHandler(this);
+    public Sound sound = new Sound();
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
+    public Inventory inventory = new Inventory();
+    public CropManager cropM = new CropManager(this);
+
 
     public EventHandler eHandler = new EventHandler(this);
     Thread gameTreader;
@@ -143,7 +147,7 @@ public class GamePanel extends JPanel implements Runnable {
             ui.drawPauseScreen();
         }
 
-
+        cropM.update();
     }
 
     public void paintComponent(Graphics g) {
@@ -157,6 +161,7 @@ public class GamePanel extends JPanel implements Runnable {
         // others
         else {
             tileM.draw(g2);
+            cropM.draw(g2);
 
             entities = new ArrayList<>();
 
@@ -168,7 +173,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             for (Entity object : obj) {
                 if (object != null) {
-                    entities.add(object);
+                     entities.add(object);
                 }
             }
 
@@ -182,11 +187,12 @@ public class GamePanel extends JPanel implements Runnable {
             for (Entity entity : entities) {
                 entity.draw(g2);
             }
+
             ui.draw(g2);
 
 
-}
-            g2.dispose();
+        }
+        g2.dispose();
     }
 
     public void playMusic(int i) {
@@ -195,6 +201,7 @@ public class GamePanel extends JPanel implements Runnable {
         sound.loop();
     }
 
+    /*
     public void stopMusic() {
         sound.stop();
     }
@@ -204,5 +211,6 @@ public class GamePanel extends JPanel implements Runnable {
         sound.play();
     }
 
-}
+     */
 
+}

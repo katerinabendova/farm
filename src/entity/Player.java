@@ -43,15 +43,15 @@ public class Player extends Entity {
     }
     public void getPlayerImage(){
 
-            up1 = setup("/player/farmer_back1");
-            up2 = setup("/player/farmer_back2");
-            down1 = setup("/player/farmer_front1");
-            down2 = setup("/player/farmer_front2");
-            left1 = setup("/player/farmer_side3");
-            left2 = setup("/player/farmer_side4");
-            right1 = setup("/player/farmer_side1");
-            right2 = setup("/player/farmer_side2");
-            basic = setup("/player/farmer_basic");
+        up1 = setup("/player/farmer_back1");
+        up2 = setup("/player/farmer_back2");
+        down1 = setup("/player/farmer_front1");
+        down2 = setup("/player/farmer_front2");
+        left1 = setup("/player/farmer_side3");
+        left2 = setup("/player/farmer_side4");
+        right1 = setup("/player/farmer_side1");
+        right2 = setup("/player/farmer_side2");
+        basic = setup("/player/farmer_basic");
     }
 
     public void update() {
@@ -112,6 +112,11 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
+        if (gp.keyHandler.tPressed) {
+            gp.cropM.tryHarvestCrop(worldX, worldY);
+            gp.keyHandler.tPressed = false;
+        }
+
     }
 
     public void pickUpObject(int i){
@@ -167,4 +172,3 @@ public class Player extends Entity {
     }
 
 }
-

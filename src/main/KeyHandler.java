@@ -9,6 +9,7 @@ public class KeyHandler implements KeyListener {
     public boolean downPressed;
     public boolean leftPressed;
     public boolean rightPressed;
+    public boolean tPressed;
 
     public KeyHandler(GamePanel gp){
        this.gp = gp;
@@ -61,6 +62,9 @@ public class KeyHandler implements KeyListener {
                 rightPressed = true;
             }
         }
+        if (code == KeyEvent.VK_T) {
+            tPressed = true;
+        }
 
         if (code == KeyEvent.VK_P) {
             if (gp.gameState == gp.playState) {
@@ -91,7 +95,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_D) {
             this.rightPressed = false;
         }
-
+        if (code == KeyEvent.VK_T) {
+            tPressed = false;
+        }
     }
 }
 
