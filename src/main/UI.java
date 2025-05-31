@@ -29,25 +29,15 @@ public class UI {
         lifeBlank = life.image3;
     }
 
+    /**
+     * renders UI elements based on the current game state
+     * @param g2 he Graphics2D object used for drawing UI components
+     */
     public void draw(Graphics2D g2) {
         this.g2 = g2;
 
         g2.setFont(imact_100);
         g2.setColor(new Color(169,120,196));
-/*
-        if (gp.gameState == gp.titleState){
-            drawAnimalLife();
-           drawTitleScreen();
-        }
-        if (gp.gameState == gp.titleState){
-            drawAnimalLife();
-        }
-        if (gp.gameState == gp.pauseState){
-            drawAnimalLife();
-            drawPauseScreen();
-        }
-
- */
         if (gp.gameState == gp.titleState){
             drawTitleScreen();
         }
@@ -65,6 +55,9 @@ public class UI {
     }
 
 
+    /**
+     * draws the health (life) indicators above all active animals on the screen
+     */
     public void drawAnimalLife(){
         for (int i = 0; i < gp.animals.length; i++) {
             if (gp.animals[i] != null){
@@ -97,6 +90,10 @@ public class UI {
 
         }
     }
+
+    /**
+     *  draws the title screen, including the game title, player sprite, and menu options
+     */
     public void drawTitleScreen(){
         g2.setColor(new Color(185,216,149));
         g2.fillRect(0, 0, gp.screenWidht, gp.screenHeight);
@@ -126,22 +123,18 @@ public class UI {
             g2.drawString(">", x - gp.tileSize, y);
         }
 
-        text = "LOAD GAME";
+        text = "QUIT";
         x = getXForCenteredText(text);
         y += gp.tileSize;
         g2.drawString(text, x, y);
         if (commandNum == 1){
             g2.drawString(">", x - gp.tileSize, y);
         }
-
-        text = "QUIT";
-        x = getXForCenteredText(text);
-        y += gp.tileSize;
-        g2.drawString(text, x, y);
-        if (commandNum == 2){
-            g2.drawString(">", x - gp.tileSize, y);
-        }
     }
+
+    /**
+     * draws the pause screen with a centered "PAUSED" message
+     */
     public void drawPauseScreen(){
         String text = "PAUSED";
         int x = getXForCenteredText(text);
@@ -151,6 +144,10 @@ public class UI {
         g2.setColor(new Color(169,120,196));
         g2.drawString(text, x, y);
     }
+
+    /**
+     * draws the game over screen with a centered "GAME OVER" message
+     */
     public void drwGameOverScreen(){
         g2.setColor(new Color(185,216,149));
         g2.fillRect(0, 0, gp.screenWidht, gp.screenHeight);
@@ -164,12 +161,20 @@ public class UI {
         g2.drawString(text, x, y);
     }
 
+    /**
+     * calculates the x-coordinate to center a given text string horizontally on the screen
+     * @param text the text string to be centered
+     * @return the x-coordinate where the text should start for horizontal centering
+     */
     public int getXForCenteredText(String text){
         int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
         int x = gp.screenWidht/2 - length/2;
         return x;
     }
 
+    /**
+     * draws the player's inventory and warning messages on the screen
+     */
     public void drawInventory() {
         g2.setColor(Color.white);
         g2.setFont(new Font("IMPACT", Font.PLAIN, 20));
@@ -195,6 +200,10 @@ public class UI {
             g2.drawString(warningMessage, x, y);
         }
     }
+
+    /**
+     * updates the warning message based on the hunger status of animals
+     */
     public void updateWarningMessage() {
         boolean animalHungry = false;
 

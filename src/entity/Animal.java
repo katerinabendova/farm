@@ -13,6 +13,10 @@ public class Animal extends Entity{
         lastHungerTime = System.currentTimeMillis();
     }
 
+    /**
+     * updates the hunger state of the entity based on a time interval
+     * if life reaches zero, the game state is set to game over, and a message is printed
+     */
     public void updateHunger() {
         long currentTime = System.currentTimeMillis();
 
@@ -43,6 +47,9 @@ public class Animal extends Entity{
         }
     }
 
+    /**
+     * updates the entity's state each game tick
+     */
     @Override
     public void update() {
         setAction();
@@ -76,6 +83,7 @@ public class Animal extends Entity{
         }
         updateHunger();
     }
+
     public boolean isHungry() {
         return this.life <= 2;
     }

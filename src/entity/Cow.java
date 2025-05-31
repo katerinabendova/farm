@@ -9,7 +9,6 @@ public class Cow extends Animal {
     public Cow(GamePanel gp) {
         super(gp);
         direction = "down";
-       // spriteNum = 1;
         speed = 1;
         entityHeight = gp.tileSize;
         entityWidth = gp.tileSize;
@@ -32,6 +31,9 @@ public class Cow extends Animal {
         right2 = setup("/animals/cow_side4");
     }
 
+    /**
+     * generates a random number between 1 and 100 to select a new direction
+     */
     public void setAction() {
         actionLockCounter++;
 

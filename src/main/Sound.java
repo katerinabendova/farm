@@ -15,6 +15,10 @@ public class Sound {
         soundURL[0] = getClass().getResource("/sound/basic_sound.wav");
     }
 
+    /**
+     * loads an audio clip from the specified sound URL index
+     * @param i the index of the sound file URL in the soundURL array
+     */
     public void setFile(int i){
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
@@ -31,9 +35,5 @@ public class Sound {
 
     public void loop(){
         clip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
-
-    public void stop(){
-        clip.stop();
     }
 }

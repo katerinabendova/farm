@@ -43,6 +43,9 @@ public class Entity {
     public void setAction() {
     }
 
+    /**
+     * updates the entity's state each frame
+     */
     public void update() {
         setAction();
         collisionOn = false;
@@ -81,6 +84,10 @@ public class Entity {
 
     }
 
+    /**
+     * Draws the entity on the screen relative to the player's position
+     * @param g2 the Graphics2D object used for drawing the entity image
+     */
     public void draw(Graphics2D g2){
 
         BufferedImage image = null;
@@ -132,6 +139,11 @@ public class Entity {
         }
     }
 
+    /**
+     * loads an image from the specified path, scales it to the game's tile size, and returns it
+     * @param imagePath the relative path to the image resource (without the ".png" extension)
+     * @return the loaded and scaled BufferedImage, or null if loading fails
+     */
     public BufferedImage setup(String imagePath){
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;
@@ -145,6 +157,12 @@ public class Entity {
         return image;
     }
 
+    /**
+     * loads an image from the specified path, scales it by the given scale factor based on the game's tile size
+     * @param imagePath the relative path to the image resource (without the ".png" extension)
+     * @param scaleFactor the factor by which to scale the image relative to the tile size
+     * @return the loaded and scaled BufferedImage, or null if loading fails
+     */
     public BufferedImage setupBig(String imagePath, int scaleFactor){
         UtilityTool uTool = new UtilityTool();
         BufferedImage image = null;

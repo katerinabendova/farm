@@ -12,8 +12,12 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    //public int hasStar = 0;
-
+    /**
+     * constructs a Player object, initializing its position on the screen,
+     * setting up the collision solid area, and loading default player settings and images
+     * @param gp the main GamePanel instance, used for accessing game-wide properties
+     * @param kh the KeyHandler instance to handle player input
+     */
     public Player(GamePanel gp, KeyHandler kh) {
         super(gp);
 
@@ -35,12 +39,16 @@ public class Player extends Entity {
         getPlayerImage();
     }
 
+    /**
+     * initializes the player's default position, movement speed, and direction
+     */
     public void setDefaultValues() {
-        worldX = gp.tileSize * 6; //players position on the world map
+        worldX = gp.tileSize * 6;
         worldY = gp.tileSize * 3;
         speed = 4;
         direction = "down";
     }
+
     public void getPlayerImage(){
 
         up1 = setup("/player/farmer_back1");
@@ -54,6 +62,11 @@ public class Player extends Entity {
         basic = setup("/player/farmer_basic");
     }
 
+    /**
+     * updates the player's state every frame based on key inputs and interactions
+     * handles movement direction based on key presses, collision detection with tiles and objects,
+     * picking up objects, interacting with animals, and sprite animation updates
+     */
     public void update() {
 
         if (kh.upPressed == true || kh.downPressed == true || kh.leftPressed == true || kh.rightPressed == true){
@@ -72,15 +85,12 @@ public class Player extends Entity {
 
             }
 
-            // check tile collision
             collisionOn = false;
             gp.cChecker.checkTile(this);
 
-            //check object collision
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
 
-            // check animal collision
             int animalIndex = gp.cChecker.checkEntity(this, gp.animals);
             interactAnimal(animalIndex);
 
@@ -131,6 +141,10 @@ public class Player extends Entity {
     }
 
 
+    /**
+     * draws the player sprite on the screen based on the current direction and animation frame
+     * @param g2 the Graphics2D object used for drawing the player
+     */
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
 

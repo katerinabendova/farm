@@ -8,7 +8,6 @@ public class Sheep extends Animal{
     public Sheep(GamePanel gp) {
         super(gp);
         direction = "down";
-       // spriteNum = 1;
         speed = 1;
         entityHeight = gp.tileSize;
         entityWidth = gp.tileSize;
@@ -35,6 +34,9 @@ public class Sheep extends Animal{
 
     }
 
+    /**
+     * generates a random number between 1 and 100 to select a new direction
+     */
     public void setAction() {
         actionLockCounter++;
 

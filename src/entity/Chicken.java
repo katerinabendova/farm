@@ -9,7 +9,6 @@ public class Chicken extends Animal {
     public Chicken(GamePanel gp) {
         super(gp);
         direction = "down";
-        //spriteNum = 1;
         speed = 1;
         entityHeight = gp.tileSize;
         entityWidth = gp.tileSize;
@@ -35,6 +34,9 @@ public class Chicken extends Animal {
 
     }
 
+    /**
+     * generates a random number between 1 and 100 to select a new direction
+     */
     @Override
     public void setAction() {
         actionLockCounter ++;

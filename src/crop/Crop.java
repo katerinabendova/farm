@@ -17,7 +17,7 @@ public class Crop{
     }
 
     public boolean isReadyToRespawn() {
-        return isHarvested && (System.currentTimeMillis() - harvestTime > 120_000); // 2 min
+        return isHarvested && (System.currentTimeMillis() - harvestTime > 120000);
     }
     public boolean isGrown() {
         return growthStage >= maxGrowthStage && !isHarvested;

@@ -12,6 +12,9 @@ public class AssetSetter {
         this.gp = gp;
     }
 
+    /**
+     * initializes and places objects in the "World1" map
+     */
     public void setObjectWorld1() {
         gp.obj = new Entity[10];
 
@@ -24,6 +27,9 @@ public class AssetSetter {
         gp.obj[1].worldY = 40 * gp.tileSize;
     }
 
+    /**
+     * initializes and places animals in the "World1" map
+     */
     public void setAnimalWorld1() {
         gp.animals = new Entity[10];
 

@@ -9,6 +9,11 @@ public class CollisionChecker {
         this.gp = gp;
     }
 
+    /**
+     * checks for collision between the given entity and the tiles in the game world
+     * based on the entity's current direction and position
+     * @param entity the entity whose tile collision is to be checked
+     */
     public void checkTile(Entity entity){
 
         int entityLeftWorldX = entity.worldX + entity.solidArea.x;
@@ -88,17 +93,22 @@ public class CollisionChecker {
     }
 
 
-
+    /**
+     * checks for a collision between the given entity and objects in the game
+     * it determines if the entity will collide with any object in the direction it is moving,
+     * based on its speed and solid area
+     * @param entity the entity whose collision is being checked
+     * @param player a boolean indicating if the entity is the player
+     * @return the index of the object collided with, or 999 if no collision occurs
+     */
     public int checkObject(Entity entity, boolean player) {
         int index = 999;
 
         for (int i = 0; i < gp.obj.length; i++) {
             if (gp.obj[i] != null) {
-                // get entity's solid area position
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                // get the object's solid area position
                 gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;
                 gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;
 
@@ -150,18 +160,23 @@ public class CollisionChecker {
         return index;
     }
 
-    // animal collision
+    /**
+     * checks for a collision between the given entity and other target entities
+     * it calculates whether the moving entity's collision area intersects with any target entity's collision area,
+     * considering the entity's direction and speed
+     * @param entity the entity for which collision is being checked
+     * @param target an array of target entities to check collisions against
+     * @return the index of the target entity collided with, or 999 if no collision occurs
+     */
     public int checkEntity(Entity entity, Entity[] target){
 
         int index = 999;
 
         for (int i = 0; i < target.length; i++) {
             if (target[i] != null) {
-                // get entity's solid area position
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                // get the object's solid area position
                 target[i].solidArea.x = target[i].worldX + target[i].solidArea.x;
                 target[i].solidArea.y = target[i].worldY + target[i].solidArea.y;
 
@@ -209,13 +224,18 @@ public class CollisionChecker {
         return index;
     }
 
+    /**
+     * checks if the given entity collides with the player based on their solid areas
+     * it adjusts the entity's collision area according to its direction and speed,
+     * then tests for intersection with the player's collision area
+     * if a collision is detected, it sets the entity's collision flag to true
+     * @param entity the entity to check collision against the player
+     */
     public void checkPlayer(Entity entity){
 
-                // get entity's solid area position
                 entity.solidArea.x = entity.worldX + entity.solidArea.x;
                 entity.solidArea.y = entity.worldY + entity.solidArea.y;
 
-                // get the object's solid area position
                 gp.player.solidArea.x = gp.player.worldX + gp.player.solidArea.x;
                 gp.player.solidArea.y = gp.player.worldY + gp.player.solidArea.y;
 

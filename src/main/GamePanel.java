@@ -15,21 +15,18 @@ import java.util.Comparator;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements Runnable {
-    // screen settings
+
     public final int tileSize = 48;
     public final int maxScreenCol = 16;
     public final int maxScreenRow = 12;
     public final int screenWidht = tileSize * maxScreenCol;
     public final int screenHeight = tileSize * maxScreenRow;
 
-    //world settings
     public int maxWorldCol = 50;
     public int maxWorldRow = 50;
 
-    // fps
     int FPS = 60;
 
-    // system
     public TileManager tileM = new TileManager(this);
     public KeyHandler keyHandler = new KeyHandler(this);
     public Sound sound = new Sound();
@@ -39,17 +36,14 @@ public class GamePanel extends JPanel implements Runnable {
     public Inventory inventory = new Inventory();
     public CropManager cropM = new CropManager(this);
 
-
     public EventHandler eHandler = new EventHandler(this);
     Thread gameTreader;
 
-    // entity and object
     public Player player;
     public Entity obj[] = new Entity[20];
     public Entity animals[] = new Entity[10];
     ArrayList<Entity> entities =new ArrayList<>();
 
-    // game state
     public int gameState;
     public final int titleState = 0;
     public final int playState = 1;
@@ -73,7 +67,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void setupGame() {
         aSetter.setObjectWorld1();
         aSetter.setAnimalWorld1();
-        //   playMusic(0);
         gameState = titleState;
     }
 
@@ -82,6 +75,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.gameTreader.start();
     }
 
+    /**
+     * loads map data, initializes entities, and sets up objects and animals based on the map name
+     * @param mapName the filename of the map to load
+     */
     public void loadMapData(String mapName) {
         tileM.loadMap("/maps/" + mapName);
 
@@ -100,7 +97,9 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
-
+    /**
+     *  main game loop that controls update and rendering timing to maintain a consistent FPS
+     */
     public void run() {
         double drawInterval = (double) (1000000000 / this.FPS);
         double delta = (double) 0.0F;
@@ -116,29 +115,17 @@ public class GamePanel extends JPanel implements Runnable {
                 --delta;
             }
         }
-
     }
 
+    /**
+     * updates the game state and all active entities
+     */
     public void update() {
-//        if (gameState == playState) {
-//            player.update();
-//            for (int i = 0; i < animals.length; i++) {
-//                if (animals[i] != null) {
-//                    animals[i].update();
-//                }
-//            }
-//        }
-
-
-        //this.player.update();
-
         if (gameState == playState) {
             player.update();
             eHandler.checkEvent();
         }
 
-
-        // animal
         for (int i = 0; i < animals.length; i++) {
             if (animals[i] != null) {
                 animals[i].update();
@@ -151,15 +138,18 @@ public class GamePanel extends JPanel implements Runnable {
         cropM.update();
     }
 
+    /**
+     * custom painting method for the game panel, rendering game elements based on the current game state
+     * @param g the <code>Graphics</code> object to protect
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        // title screen
         if (gameState == titleState) {
             ui.draw(g2);
         }
-        // others
+
         else {
             tileM.draw(g2);
             cropM.draw(g2);
@@ -203,17 +193,5 @@ public class GamePanel extends JPanel implements Runnable {
         sound.play();
         sound.loop();
     }
-
-    /*
-    public void stopMusic() {
-        sound.stop();
-    }
-
-    public void playSE(int i) { //se = sound effect
-        sound.setFile(i);
-        sound.play();
-    }
-
-     */
 
 }

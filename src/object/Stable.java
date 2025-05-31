@@ -3,9 +3,6 @@ package object;
 import entity.Entity;
 import main.GamePanel;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
-
 public class Stable extends Entity {
 
     public Stable(GamePanel gp) {

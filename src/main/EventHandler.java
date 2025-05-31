@@ -1,7 +1,5 @@
 package main;
 
-import entity.Entity;
-
 import java.awt.*;
 
 public class EventHandler {
@@ -17,6 +15,9 @@ public class EventHandler {
         eventRectDefaultY = eventRect.y;
     }
 
+    /**
+     * checks if the player has triggered any predefined map events based on their position and direction
+     */
     public void checkEvent() {
         if (hit(10, 11, "any")) {
             teleportToMap("stable.txt", 5 * gp.tileSize, 7 * gp.tileSize, gp.playState, 20, 12, "down", 5, 4);
@@ -30,6 +31,18 @@ public class EventHandler {
         }
     }
 
+    /**
+     * teleports the player to a new map with specified starting position and state
+     * @param mapFileName the filename of the map to load
+     * @param playerX the target player X coordinate
+     * @param playerY the target player Y coordinate
+     * @param gameState the new game state to set after teleporting
+     * @param newMaxCol the new maximum number of columns in the map
+     * @param newMaxRow the new maximum number of rows in the map
+     * @param playerDirection the direction the player should face after teleporting
+     * @param playerStartCol the column index where the player starts on the new map
+     * @param playerStartRow the row index where the player starts on the new map
+     */
     public void teleportToMap(String mapFileName, int playerX, int playerY, int gameState, int newMaxCol, int newMaxRow, String playerDirection, int playerStartCol, int playerStartRow) {
         gp.loadMapData(mapFileName);
         gp.maxWorldCol = newMaxCol;
@@ -47,6 +60,13 @@ public class EventHandler {
 
     }
 
+    /**
+     * checks if the player has collided with an event area in a specific direction
+     * @param eventCol the column index of the event tile
+     * @param eventRow the row index of the event tile
+     * @param reqDirection reqDirection the required player direction to trigger the event
+     * @return true if the player's collision area intersects the event area and the direction matches; false otherwise
+     */
     public boolean hit(int eventCol, int eventRow, String reqDirection) {
         boolean hit = false;
 
@@ -68,7 +88,4 @@ public class EventHandler {
         return hit;
     }
 
-    public void damagePit(int gameState) {
-        gp.gameState = gameState;
-    }
 }

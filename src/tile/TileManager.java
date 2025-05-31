@@ -25,42 +25,12 @@ public class TileManager {
         getTileImage();
         loadMap("/maps/world1.txt");
     }
-/*
-    public void loadMap(String filePath){
 
-        try {
-            InputStream is = getClass().getResourceAsStream(filePath);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
-
-            int col = 0;
-            int row = 0;
-
-            while(col < gp.maxWorldCol && row < gp.maxWorldRow){
-                String line = br.readLine();
-
-                while (col< gp.maxWorldCol){
-                    String numbers[] = line.split(" ");
-
-                    int num = Integer.parseInt(numbers[col]);
-
-                    mapTileNum[col][row] = num;
-                    col ++;
-                }
-                if (col == gp.maxWorldCol){
-                    col = 0;
-                    row ++;
-
-                }
-            }
-            br.close();
-
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-    */
-public void loadMap(String filePath) {
+    /**
+     * loads the tile map from a text file and initializes the map tile number array
+     * @param filePath the path to the map file
+     */
+    public void loadMap(String filePath) {
     try {
         InputStream is = getClass().getResourceAsStream(filePath);
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -79,7 +49,7 @@ public void loadMap(String filePath) {
 
         int rows = lines.size();
         int cols = lines.get(0).length;
-        mapTileNum = new int[cols][rows];  // [col][row]
+        mapTileNum = new int[cols][rows];
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
@@ -97,7 +67,7 @@ public void loadMap(String filePath) {
 
 
     /**
-     *
+     * sets the index of the tile in the array
      */
     public void getTileImage(){
 
@@ -136,6 +106,12 @@ public void loadMap(String filePath) {
 
     }
 
+    /**
+     * initializes a tile with an image and collision property at the specified index
+     * @param index the index in the tile array where the tile will be stored
+     * @param imageName the name of the image file (without extension) to load from the tiles directory
+     * @param collision whether the tile has collision enabled (true if impassable)
+     */
     public void setup(int index, String imageName, boolean collision){
         UtilityTool uTool = new UtilityTool();
 
@@ -150,6 +126,10 @@ public void loadMap(String filePath) {
         }
     }
 
+    /**
+     *  draws the tiles of the game world onto the screen based on the player's position
+     * @param g2 the Graphics2D object used for rendering the tiles
+     */
     public void draw(Graphics2D g2){
         int worldCol = 0;
         int worldRow = 0;

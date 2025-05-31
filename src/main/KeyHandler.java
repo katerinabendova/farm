@@ -18,6 +18,10 @@ public class KeyHandler implements KeyListener {
     public void keyTyped(KeyEvent e) {
     }
 
+    /**
+     * handles key press events to control game state and player actions
+     * @param e the event to be processed
+     */
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
@@ -40,9 +44,6 @@ public class KeyHandler implements KeyListener {
                     gp.playMusic(0);
                 }
                 if (gp.ui.commandNum == 1){
-                    // add later
-                }
-                if (gp.ui.commandNum == 2){
                     System.exit(0);
                 }
             }
@@ -78,6 +79,10 @@ public class KeyHandler implements KeyListener {
 
     }
 
+    /**
+     * handles key release events to update movement and action flags
+     * @param e the event to be processed
+     */
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
         if (code == KeyEvent.VK_W) {

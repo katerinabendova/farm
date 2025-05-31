@@ -13,6 +13,11 @@ public class CropManager {
     BufferedImage cropImage;
     public ArrayList<Crop> crops = new ArrayList<>();
 
+    /**
+     * constructs a CropManager and initializes all crops based on the game map
+     * loads the crop image and scans the game world tiles to place cropsat all tiles marked with the tile number 5.
+     * @param gp the GamePanel instance containing game settings and resources
+     */
     public CropManager(GamePanel gp) {
         this.gp = gp;
 
@@ -33,6 +38,9 @@ public class CropManager {
         }
     }
 
+    /**
+     * updates the state of all crops
+     */
     public void update() {
         for (Crop crop : crops) {
             if (crop.isReadyToRespawn()) {
@@ -44,6 +52,10 @@ public class CropManager {
         }
     }
 
+    /**
+     * draws all unharvested crops on the screen
+     * @param g2 the Graphics2D context used for drawing
+     */
     public void draw(Graphics2D g2) {
         for (Crop crop : crops) {
             if (!crop.isHarvested) {
@@ -54,6 +66,11 @@ public class CropManager {
         }
     }
 
+    /**
+     * attempts to harvest a crop at the specified world coordinates
+     * @param worldX the X coordinate in the world to check for a crop
+     * @param worldY the Y coordinate in the world to check for a crop
+     */
     public void tryHarvestCrop(int worldX, int worldY) {
         for (Crop crop : crops) {
             if (!crop.isHarvested &&
