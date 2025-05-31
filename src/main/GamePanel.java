@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     public CropManager cropM = new CropManager(this);
 
     public EventHandler eHandler = new EventHandler(this);
-    Thread gameTreader;
+    public Thread gameTreader;
 
     public Player player;
     public Entity obj[] = new Entity[20];
